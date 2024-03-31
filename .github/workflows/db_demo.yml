@@ -60,14 +60,17 @@ jobs:
           # `PGPASSWORD=postgres_password psql ...`
           PGPASSWORD: postgres_password
         
-      
+      - name: Check out repository
+        uses: actions/checkout@v2
+
       - name: Run database setup script
         run: |
           source venv/bin/activate
           python scripts/db_setup.py
         shell: bash
+        working-directory: .
 
-        
+
       # - name: Run database setup script
       #   run: python scripts/db_setup.py 
 
