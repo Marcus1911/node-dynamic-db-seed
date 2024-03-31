@@ -42,17 +42,8 @@ jobs:
           apt-get install --yes postgresql-client
           apt-get install --yes python3.11
           apt-get install --yes python3-venv
-          apt-get install --yes pip
+          apt-get install --yes python-psycopg2
       
-
-      - name: Set up Python environment
-        run: |
-          pip install psycopg2-binary
-          echo "Current directory:"
-          pwd
-          echo "Listing files:"
-          ls -alh
-        shell: bash
 
       # queries database with postgres client
       - name: Query database
