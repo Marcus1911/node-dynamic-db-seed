@@ -3,7 +3,7 @@ name: PostgreSQL Workflow
 on:
   push:
     branches:
-      - '***'
+      - '**'
 jobs:
   setup-db:
     runs-on: ubuntu-latest
