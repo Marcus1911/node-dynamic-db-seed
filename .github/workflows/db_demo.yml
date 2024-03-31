@@ -47,7 +47,7 @@ jobs:
 
       - name: Set up Python environment
         run: |
-          cd /__w/node-dynamic-db-seed/node-dynamic-db-seed/scripts
+          cd ./scripts
           python3 -m venv venv
           source venv/bin/activate
           pip install psycopg2-binary
