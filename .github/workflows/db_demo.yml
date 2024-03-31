@@ -65,7 +65,9 @@ jobs:
         run: |
           source venv/bin/activate
           python scripts/db_setup.py
+        shell: bash
 
+        
       # - name: Run database setup script
       #   run: python scripts/db_setup.py 
 
