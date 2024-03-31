@@ -5,6 +5,7 @@ on: [push]
 jobs:
   setup-db:
     runs-on: ubuntu-latest
+    environment: postgres
     services:
       postgres:
         image: postgres:latest
@@ -12,6 +13,7 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }} #
         ports:
           - 5432:5432
         options: >-
