@@ -74,11 +74,11 @@ jobs:
           pwd
           echo "Listing files:"
           ls -alh
-          cd /__w/node-dynamic-db-seed/node-dynamic-db-seed/scripts
+          cd ./scripts
           source ../venv/bin/activate
           python db_setup.py
         shell: bash
-        working-directory: ./scripts/
+        #working-directory: ./scripts/
 
 
 
