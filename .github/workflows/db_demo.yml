@@ -1,19 +1,34 @@
-name: PostgreSQL Workflow
-
+# .github/workflows/postgres.yml
 on: push
-
 jobs:
-  setup-db:
+  # label of the container job
+  postgres-job:
+    # containers must run in Linux based operating systems
     runs-on: ubuntu-latest
+    # Docker Hub image that `postgres-job` executes in
+    container: node:latest
+
+    # service containers to run with `postgres-job`
     services:
+      # label used to access the service container
       postgres:
+        # Docker Hub image
         image: postgres:latest
+        # service environment variables
+        # `POSTGRES_HOST` is `postgres`
         env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          # optional (defaults to `postgres`)
+          POSTGRES_DB: postgres_db
+          # required
+          POSTGRES_PASSWORD: postgres_password
+          # optional (defaults to `5432`)
+          POSTGRES_PORT: 5432
+          # optional (defaults to `postgres`)
+          POSTGRES_USER: postgres_user
         ports:
+          # maps tcp port 5432 on service container to the host
           - 5432:5432
+        # set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -21,27 +36,18 @@ jobs:
           --health-retries 5
 
     steps:
-    - name: Check out repository
-      uses: actions/checkout@v2
+      - name: Install PostgreSQL client
+        run: |
+          apt-get update
+          apt-get install --yes postgresql-client
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-
-    - name: Install psycopg2
-      run: pip install psycopg2-binary
-
-    - name: Run database setup script
-      env:
-        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-        POSTGRES_HOST: postgres
-      run: python scripts/db_setup.py
-
-
-
+      # queries database with postgres client
+      - name: Query database
+        run: psql -h postgres -d postgres_db -U postgres_user -c 'SELECT 1;'
+        env:
+          # postgress password is required; alternatively, you can run:
+          # `PGPASSWORD=postgres_password psql ...`
+          PGPASSWORD: postgres_password
 
 ## name: PostgreSQL Workflow
 
