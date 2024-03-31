@@ -1,21 +1,17 @@
 name: PostgreSQL Workflow
 
-on:
-  push:
-    branches:
-      - '**'
+on: push
+
 jobs:
   setup-db:
     runs-on: ubuntu-latest
-    environment: postgres
     services:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_USER: calcom #${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: "123456" #${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: directus #${{ secrets.POSTGRES_DB }}
-          POSTGRES_HOST: postgres
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         ports:
           - 5432:5432
         options: >-
@@ -37,7 +33,56 @@ jobs:
       run: pip install psycopg2-binary
 
     - name: Run database setup script
-      run: psql "postgresql://calcom:123456@postgres:5432/directus"
+      env:
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        POSTGRES_HOST: postgres
+      run: python scripts/db_setup.py
+
+
+
+
+## name: PostgreSQL Workflow
+
+# on:
+#   push:
+#     branches:
+#       - '**'
+# jobs:
+#   setup-db:
+#     runs-on: ubuntu-latest
+#     environment: postgres
+#     services:
+#       postgres:
+#         image: postgres:latest
+#         env:
+#           POSTGRES_USER: calcom #${{ secrets.POSTGRES_USER }}
+#           POSTGRES_PASSWORD: "123456" #${{ secrets.POSTGRES_PASSWORD }}
+#           POSTGRES_DB: directus #${{ secrets.POSTGRES_DB }}
+#           POSTGRES_HOST: postgres
+#         ports:
+#           - 5432:5432
+#         options: >-
+#           --health-cmd pg_isready
+#           --health-interval 10s
+#           --health-timeout 5s
+#           --health-retries 5
+
+#     steps:
+#     - name: Check out repository
+#       uses: actions/checkout@v2
+
+#     - name: Set up Python
+#       uses: actions/setup-python@v2
+#       with:
+#         python-version: '3.x'
+
+#     - name: Install psycopg2
+#       run: pip install psycopg2-binary
+
+#     - name: Run database setup script
+#       run: psql "postgresql://calcom:123456@postgres:5432/directus"
 
 
     # - name: Run database setup script
