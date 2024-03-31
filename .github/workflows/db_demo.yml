@@ -42,7 +42,7 @@ jobs:
           apt-get install --yes postgresql-client
           apt-get install --yes python3.11
           apt-get install --yes python3-venv
-          apt-get install --yes python-psycopg2
+          apt-get install --yes python3-psycopg2
       
 
       # queries database with postgres client
