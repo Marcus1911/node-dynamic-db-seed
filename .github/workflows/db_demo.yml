@@ -65,10 +65,11 @@ jobs:
 
       - name: Run database setup script
         run: |
-          source venv/bin/activate
-          python scripts/db_setup.py
+          source ../venv/bin/activate
+          python db_setup.py
         shell: bash
-        working-directory: .
+        working-directory: ./scripts/
+
 
 
       # - name: Run database setup script
