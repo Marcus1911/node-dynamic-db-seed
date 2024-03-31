@@ -43,6 +43,16 @@ jobs:
           apt-get install --yes python3.11
           apt-get install --yes pip
           pip install psycopg2-binary
+      
+
+      - name: Set up Python environment
+        run: |
+          apt-get update
+          apt-get install --yes python3-venv
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install psycopg2-binary
+
 
       # queries database with postgres client
       - name: Query database
@@ -51,9 +61,15 @@ jobs:
           # postgress password is required; alternatively, you can run:
           # `PGPASSWORD=postgres_password psql ...`
           PGPASSWORD: postgres_password
-          
+        
+      
       - name: Run database setup script
-        run: python scripts/db_setup.py 
+        run: |
+          source venv/bin/activate
+          python scripts/db_setup.py
+
+      # - name: Run database setup script
+      #   run: python scripts/db_setup.py 
 
 ## name: PostgreSQL Workflow
 
