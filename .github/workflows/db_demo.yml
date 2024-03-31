@@ -43,15 +43,19 @@ jobs:
         POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         POSTGRES_HOST: localhost
       run: |
-        python -c "
+         python -c "
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-connection_details = 'dbname=directus user=calcom password=123456 host=localhost'
+# Ensure your connection details string is correct.
+# Using single quotes to encapsulate the command for `python -c` and
+# double quotes for strings inside the Python code.
+connection_details = 'dbname=\\"${{ secret.POSTGRES_DB }}\\" user=\\"${{ secret.POSTGRES_USER }}\\" password=\\"${{ secret.POSTGRES_PASSWORD }}\\" host=\\"localhost\\"'
 conn = psycopg2.connect(connection_details)
 conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 
 cursor = conn.cursor()
+
 
 # Table 1 Creation
 cursor.execute('''
