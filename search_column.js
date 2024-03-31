@@ -16,7 +16,7 @@ const knex = require('knex')({
   }
   
   // Predefined list of expected column names
-  const expectedColumns = ['id', 'nammmme', 'email', 'created_at']; // Example expected columns
+  const expectedColumns = ['irrrr', 'nammmme', 'emarrrril', 'createdrrrr_at']; // Example expected columns
   
   async function findNewColumns(tableName) {
     const currentColumns = await listTableColumns(tableName);
