@@ -62,7 +62,7 @@ jobs:
           pwd
           echo "Listing files:"
           ls -alh
-          python db_setup.py
+          python3 db_setup.py
         shell: bash
         #working-directory: ./scripts/
 
