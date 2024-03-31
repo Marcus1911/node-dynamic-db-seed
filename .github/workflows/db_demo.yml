@@ -50,8 +50,6 @@ jobs:
           PGPASSWORD: postgres_password
           
       - name: Run database setup script
-        env:
-        
         run: python scripts/db_setup.py 
 
 ## name: PostgreSQL Workflow
