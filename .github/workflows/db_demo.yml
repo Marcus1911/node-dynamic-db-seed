@@ -47,7 +47,6 @@ jobs:
 
       - name: Set up Python environment
         run: |
-          cd ./scripts
           python3 -m venv venv
           source venv/bin/activate
           pip install psycopg2-binary
@@ -74,8 +73,7 @@ jobs:
           pwd
           echo "Listing files:"
           ls -alh
-          cd ./scripts
-          source ../venv/bin/activate
+          source ./venv/bin/activate
           python db_setup.py
         shell: bash
         #working-directory: ./scripts/
