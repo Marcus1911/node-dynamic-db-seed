@@ -11,7 +11,7 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 #         f"host={os.getenv('POSTGRES_HOST')}"
 #     )
 
-connection_details = 'dbname=directus user=calcom password=123456 host=localhost'
+connection_details = 'dbname=directus user=calcom password=123456 host=postgres'
 conn = psycopg2.connect(connection_details)
 conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 
