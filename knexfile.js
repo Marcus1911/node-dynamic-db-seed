@@ -1,13 +1,11 @@
 require('dotenv').config();
 
 module.exports = {
-  development: {
+    client:  process.env.CLIENT, 
     connection: {
-      client:  process.env.CLIENT, 
       host: process.env.HOST,
       user: process.env.USR,
       password: process.env.PASSWORD,
       database: process.env.DATABASE,
     },
-  },
 };
